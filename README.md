@@ -1,5 +1,7 @@
 # Sensitivität und Falsifikation: Wie stark müsste die verborgene Ursache sein? – Streamlit-Demo
 
+**[→ Demo live ausprobieren](https://sebastianhanisch-sensitivitaet-demo.streamlit.app/)**
+
 Elftes Stück der Linie **Kausale Diagramme und Adjustierung** in der „Konzepte“-Reihe im Portfolio von [Sebastian Hanisch](https://sebastianhanisch.net) (Operations Research und Machine Learning). Nachfolger von [identifizierbarkeit-demo](https://github.com/sebastian-hanisch/identifizierbarkeit-demo): Dort stand, wann eine Wirkung aus Beobachtungsdaten nicht bestimmbar ist. Hier, was man dann noch sagen kann: **wie stark** eine verborgene Ursache sein müsste, um die Schlussfolgerung zu kippen, und was sich an den Annahmen **abklopfen** lässt.
 
 ## Kernfrage
@@ -98,4 +100,4 @@ Streamlit Cloud: Python 3.12.
 
 Gebaut mit Streamlit, Plotly, numpy, scipy, pandas und fpdf2.
 
-Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zu den Demos: [Interaktive Demos](https://sebastianhanisch.net/demos.html).
+Diese Demo ist Teil des Portfolios von [Sebastian Hanisch](https://sebastianhanisch.net) – Operations Research und Machine Learning ([Über mich](https://sebastianhanisch.net/ueber-mich.html)). Mehr zur Reihe: [Kausale Diagramme: von Konfundierung bis Wahl](https://sebastianhanisch.net/konzepte-kausale-diagramme.html).
