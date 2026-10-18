@@ -207,7 +207,7 @@ def verdict_instance(a: Analysis) -> tuple[str, str]:
     s = a.settings
     f = a.fit
     text = (f"Die Schätzung ohne U ist {de(f.estimate)} (Wahrheit {de(a.truth)}, Fehler {signed(f.estimate - a.truth)}), das Intervall {'deckt' if a.covers else 'verfehlt'} die Wahrheit. "
-            f"Der Robustheitswert RV{'' if s.q == 1.0 else '_' + de(s.q, 2)} ist {pct(a.rv)}: Ein verborgener Confounder müsste mit x und mit y je mindestens {pct(a.rv)} der verbleibenden Streuung erklären, "
+            f"Der Robustheitswert RV{'' if s.q == 1.0 else '_' + de(s.q, 2)} ist {pct(a.rv)}: Bei gleich starken Wegen müsste ein verborgener Confounder mit x und mit y je mindestens {pct(a.rv)} der verbleibenden Streuung erklären, "
             f"um die Schätzung um {pct(s.q)} zu senken (mit Intervall: {pct(a.rv_alpha)}).")
     if not s.has_u:
         return "success", text + " Hier gibt es kein U; der Robustheitswert fragt trotzdem nach einem möglichen."
@@ -220,7 +220,7 @@ def verdict_instance(a: Analysis) -> tuple[str, str]:
 def verdict_identity(res: dict) -> tuple[str, str]:
     no, with_u = res["dists"]["ohne U"], res["dists"]["mit U"]
     return "info", (f"Mit bekanntem U stimmen Verzerrung und Standardfehler auf {res['dev_bias']:.0e} bzw. {res['dev_se']:.0e} mit den Formeln überein; der Robustheitswert in geschlossener Form weicht von der Nullstellensuche um höchstens "
-                    f"{res['dev_rv']:.0e} ab. Ohne U ist RV_1 im Mittel {de(no['mean'], 3)}, mit U {de(with_u['mean'], 3)} (Streuung je etwa {de(with_u['sd'], 2)}): Der Wert zeigt nicht, ob U da ist. "
+                    f"{res['dev_rv']:.0e} ab. Ohne U ist RV_1 im Mittel {de(no['mean'], 3)}, mit U {de(with_u['mean'], 3)} (Streuung je etwa {de(with_u['sd'], 2)}): Der Wert zeigt nicht, ob U da ist, solange man die Grundlinie ohne U nicht kennt. "
                     f"In {res['tested']} Läufen mit wahrer Stärke unter dem Robustheitswert bleibt die Schätzung mit U in {res['tested'] - res['violations']} über null.")
 
 

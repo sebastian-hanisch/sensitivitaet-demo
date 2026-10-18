@@ -53,8 +53,8 @@ PRESETS = {
 PRESET_HELP = {
     "Standard (Voreinstellung)": "Ein verborgener Confounder von mittlerer Stärke: Die Schätzung mit der beobachteten Schwankung Z liegt unter der Wahrheit. Der Robustheitswert sagt, wie stark U sein müsste, um die Schätzung auf null zu drücken.",
     "Kein verborgener Confounder": "Es gibt kein U: Die Schätzung trifft die Wahrheit. Der Robustheitswert ist trotzdem nicht null: Er fragt nach einer möglichen, nicht nach einer tatsächlichen Ursache.",
-    "Starker verborgener Confounder": "U ist stark: Die Schätzung liegt weit unter der Wahrheit, der Robustheitswert ist klein, die negative Kontrolle schlägt fast immer an (Experiment 3).",
+    "Starker verborgener Confounder": "U ist stark: Die Schätzung liegt weit unter der Wahrheit, der Robustheitswert ist nicht kleiner als im Standardfall, liegt aber unter der wahren Stärke von U, die negative Kontrolle schlägt fast immer an (Experiment 3).",
     "Schwacher Effekt": "Die wahre Wirkung ist klein: Der Robustheitswert ist klein, schon ein schwacher Confounder kippt die Schlussfolgerung.",
-    "Große Stichprobe": "Mehr Daten, gleiche Struktur: Der Robustheitswert wächst mit dem t-Wert, aber die Verzerrung durch U bleibt.",
-    "Wirkung null": "Es gibt keine Wirkung: Der Robustheitswert ist nahe null (es gibt nichts zu kippen), das Intervall enthält null.",
+    "Große Stichprobe": "Mehr Daten, gleiche Struktur: Der Robustheitswert bleibt etwa gleich (er misst die Effektstärke), nur die Variante mit Intervall steigt; die Verzerrung durch U bleibt.",
+    "Wirkung null": "Es gibt keine Wirkung: Der Robustheitswert ist klein, mit Intervall nahe null (es gibt nichts zu kippen), das Intervall enthält null.",
 }

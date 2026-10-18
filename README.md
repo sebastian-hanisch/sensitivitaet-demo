@@ -6,7 +6,7 @@ Elftes Stück der Linie **Kausale Diagramme und Adjustierung** in der „Konzept
 
 ## Kernfrage
 
-Ein Disponent wählt den hohen Faktor nach der beobachteten Schwankung Z und nach einer verborgenen Standortqualität U. Die Regression mit Z allein liegt daneben. Der Robustheitswert und der E-Wert sagen, wie stark U sein müsste, um die Schätzung zu kippen; die negative Kontrolle und die Standard-Widerlegungstests prüfen die Annahmen. Was davon sieht den Confounder, und was beruhigt nur?
+Ein Disponent wählt den hohen Faktor nach der beobachteten Schwankung Z und nach einer verborgenen Standortqualität U. Die Regression mit Z allein liegt daneben. Der Robustheitswert und der E-Wert sagen, wie stark U sein müsste, um die Schätzung zu kippen; die negative Kontrolle prüft die Annahme fehlender Konfundierung, die Standard-Widerlegungstests prüfen nur die Technik. Was davon sieht den Confounder, und was beruhigt nur?
 
 ## Modell
 
@@ -30,12 +30,12 @@ Alle Zahlen stehen in `tests/test_claims.py`. Wahrheit τ = 3,5; U wirkt in der 
 |---|---|---|
 | Standard-Stichprobe (n = 400, Seed 35) | Ohne U **2,60** (Standardfehler 0,582, t = 4,46, Intervall 1,45 bis 3,74: deckt), mit U (Orakel) **3,62**. Robustheitswert **RV₁ = 20,0 %** (mit Intervall 11,7 %). U erklärt tatsächlich 9,1 % von x und 7,9 % von y; Z erklärt 26,7 % und 27,8 %. | `test_default_sample` |
 | Gelten die Formeln? (U bekannt, 300 Läufe) | Die Verzerrung durch U und der Standardfehler mit U folgen den Formeln auf **4·10⁻¹³** bzw. **1·10⁻¹⁵**: Rechenidentitäten, keine Näherungen. Der Robustheitswert RV₁,α in geschlossener Form weicht von der Nullstellensuche um höchstens 5·10⁻¹³ ab. | `test_experiment_1_identity_and_protection` |
-| Zeigt der Robustheitswert, ob U da ist? (400 Läufe je Fall) | **Nein.** Ohne U ist RV₁ im Mittel **0,248** (Streuung 0,038), mit U **0,178** (0,043); mit Intervall 0,171 gegen 0,093. Die Verteilungen überlappen. | `test_experiment_1_identity_and_protection` |
-| Schützt der Robustheitswert? | In **191** Läufen mit wahrer Stärke beider Wege unter RV₁ (100 bei U 0,25 / 1,0; 91 bei 0,5 / 1,5; bei stärkerem U keiner) bleibt die Schätzung mit U in **191** über null. | `test_experiment_1_identity_and_protection` |
+| Zeigt der Robustheitswert, ob U da ist? (400 Läufe je Fall) | **Nein**, jedenfalls nicht ohne die Grundlinie zu kennen. Ohne U ist RV₁ im Mittel **0,248** (Streuung 0,038), mit U **0,178** (0,043); mit Intervall 0,171 gegen 0,093. Die Verteilungen überlappen und sind gegeneinander verschoben; die Grundlinie ohne U ist in der Praxis unbekannt. | `test_experiment_1_identity_and_protection` |
+| Schützt der Robustheitswert? | In **191** Läufen mit wahrer Stärke beider Wege unter RV₁ (100 bei U 0,25 / 1,0; 91 bei 0,5 / 1,5; bei stärkerem U keiner) bleibt die Schätzung mit U in **191** über null. Das ist eine Identität, kein Zufallsbefund: Ist U auf beiden Wegen schwächer als RV₁, kann es die Schätzung nicht auf null bringen. | `test_experiment_1_identity_and_protection` |
 | E-Wert (binär, wahre Wirkung null, exakt) | In **378** Szenarien liegt das beobachtete Risikoverhältnis nie über der Schranke RR_UD · RR_UY / (RR_UD + RR_UY − 1) und erreicht sie. E-Wert zu RR 1,2 / 1,5 / 2 / 3 / 5: **1,69 / 2,37 / 3,41 / 5,45 / 9,47**; bei Stärke gleich dem E-Wert ist die Schranke genau das RR. | `test_experiment_2_evalue` |
 | Wer sieht den Confounder? (n = 500, 500 Läufe je Stärke gu = 0 / 0,25 / 0,5 / 1 / 1,5; bu = 3 gu) | Fehler der Schätzung 0,02 / −0,30 / −1,12 / −3,52 / −6,14. **Negative Kontrolle** (U mit 1,5 geteilt) schlägt in **5 / 18 / 52 / 95 / 98 %** an, **schwach geteilt** (0,5) in 4 / 8 / 10 / 21 / 31 %. **Placebo-Behandlung** 5 bis 7 %, **zufällige gemeinsame Ursache** 0 %, **Teilstichprobe** 5 bis 6 %: Sie sehen den Confounder nie. | `test_experiment_3_falsification` |
 | Eine ungültige negative Kontrolle? | Wirkt der Faktor selbst auf N (1,0), schlägt sie **ohne** Confounder in **45 %** der Läufe an. | `test_experiment_3_falsification` |
-| Benchmark gegen Z (Standard-Stichprobe) | U **so stark wie Z** bringt die Schätzung (2,60) auf **−1,10** (Abschwächung) bis **+6,29** (Verstärkung), 2-mal so stark auf −6,69 bis +11,88, 3-mal auf −18,76 bis +23,95. Das tatsächliche U ist im Mittel nur 0,40-mal so stark wie Z; mit dem wahren Vielfachen trägt die Schranke in 300 von 300 Läufen (Identität). | `test_experiment_4_benchmark` |
+| Benchmark gegen Z (Standard-Stichprobe) | U **so stark wie Z** bringt die Schätzung (2,60) auf **−1,10** (Abschwächung) bis **+6,29** (Verstärkung), 2-mal so stark auf −6,69 bis +11,88, 3-mal auf −18,76 bis +23,95. Das tatsächliche U ist im Mittel nur 0,40-mal so stark wie Z; mit dem wahren Vielfachen trägt die Schranke in 300 von 300 Läufen (Identität). Konvention der Demo: U erklärt das k-fache partielle R² von Z; nach Cinelli/Hazlett wären die Intervalle breiter. | `test_experiment_4_benchmark` |
 
 Handwerte des Textes (`test_hand_values_of_the_text`): f = 1 gibt RV = 0,618; RR 2 / 3 / 4 geben den E-Wert 3,414 / 5,449 / 7,464; bei beiden partiellen R² gleich 0,5, se = 1, df = 100 ist die Verzerrung 7,07.
 
@@ -43,7 +43,7 @@ Handwerte des Textes (`test_hand_values_of_the_text`): f = 1 gibt RV = 0,618; RR
 
 | Annahme | Was passiert, wenn sie verletzt ist | Wer setzt an |
 |---|---|---|
-| **Robustheitswert und E-Wert beschreiben Stärke, nicht Existenz** | Sie sagen, wie stark ein Confounder sein müsste, nicht ob einer da ist; der Wert ist mit und ohne U ähnlich (Experiment 1). | Wie falsch darf das Diagramm sein? |
+| **Robustheitswert und E-Wert beschreiben Stärke, nicht Existenz** | Sie sagen, wie stark ein Confounder sein müsste, nicht ob einer da ist; ohne Kenntnis der Grundlinie lässt sich ein beobachteter Wert nicht dem Fall mit oder ohne U zuordnen (die Verteilungen überlappen, Experiment 1). | Wie falsch darf das Diagramm sein? |
 | **Ein verborgener Confounder, lineare Regression** | Mehrere Confounder, nichtlineare Wirkungen und andere Schätzer (Instrument, Frontdoor, doppelt robust) sind nicht gebaut. | nicht gebaut |
 | **Der Benchmark ist plausibel** | „U so stark wie Z“ ist eine Annahme über etwas Unbeobachtetes; die Daten prüfen sie nicht. | nicht gebaut |
 | **Die negative Kontrolle teilt die Ursache** | Teilt sie U kaum, schweigt sie; wirkt der Faktor selbst auf sie, schlägt sie ohne Confounder an (Experiment 3). | nicht gebaut |

@@ -119,7 +119,7 @@ with st.sidebar:
     tau = st.slider("Wahre Wirkung des Faktors", *bounds("tau_slider"), step=C.TAU_STEP, key="tau_slider", help="Punkte Servicegrad, die der hohe Faktor wirklich bringt.")
     st.markdown("**Sensitivität**")
     q = st.slider("Um welchen Anteil soll die Schätzung fallen (q)?", *bounds("q_slider"), step=C.Q_STEP, key="q_slider", help="q = 1: bis auf null. q = 0,5: auf die Hälfte.")
-    k = st.slider("Benchmark: U ist … mal so stark wie Z", *bounds("k_slider"), step=C.K_STEP, key="k_slider", help="Eine Annahme über die Stärke von U, gemessen an der beobachteten Schwankung.")
+    k = st.slider("Benchmark: U ist … mal so stark wie Z", *bounds("k_slider"), step=C.K_STEP, key="k_slider", help="Eine Annahme über die Stärke von U, gemessen an der beobachteten Schwankung (Konvention der Demo: k-faches partielles R² von Z; nach Cinelli/Hazlett wären die Intervalle breiter).")
     direction = st.radio("Richtung der Verzerrung", C.DIRECTIONS, key="direction_radio", help="Abschwächung: Die Verzerrung geht gegen die Schätzung (Worst Case für die Schlussfolgerung). Verstärkung: in dieselbe Richtung.")
     st.markdown("**Daten**")
     n = st.slider("Beobachtungen n", *bounds("n_slider"), step=C.N_STEP, key="n_slider", help="Stichprobengröße der simulierten Daten.")
@@ -169,7 +169,7 @@ st.caption(f"Standardwelt (U wirkt mit 0,5 und 1,5), n = {res1['n']}, {res1['rep
 verdict(verdict_identity(res1))
 st.dataframe(build_identity_table(res1), hide_index=True, width="stretch")
 st.plotly_chart(build_rv_chart(res1), width="stretch", key="rv_chart")
-st.caption("Schutzprüfung: Läufe, in denen die wahre Stärke von U unter RV₁ liegt; die Schätzung mit U bleibt dort über null. Bei starkem U gibt es keine solchen Läufe (RV₁ ist dann kleiner als die Stärke).")
+st.caption("Schutzprüfung: Läufe, in denen die wahre Stärke von U auf beiden Wegen unter RV₁ liegt; die Schätzung mit U bleibt dort über null (das folgt aus der Verzerrungsformel und ist hier bestätigt). Bei starkem U gibt es keine solchen Läufe (RV₁ ist dann kleiner als die Stärke).")
 st.dataframe(build_protect_table(res1), hide_index=True, width="stretch")
 
 st.subheader("🔬 Experiment 2: Der E-Wert (binäres Ergebnis)")
@@ -203,7 +203,7 @@ st.markdown(
     """
 | Annahme | Was passiert, wenn sie verletzt ist | Wer setzt an |
 |---|---|---|
-| **Robustheitswert und E-Wert beschreiben Stärke, nicht Existenz** | Sie sagen, wie stark ein Confounder sein müsste, nicht ob einer da ist; der Wert ist mit und ohne U ähnlich (Experiment 1). | Wie falsch darf das Diagramm sein? |
+| **Robustheitswert und E-Wert beschreiben Stärke, nicht Existenz** | Sie sagen, wie stark ein Confounder sein müsste, nicht ob einer da ist; ohne Kenntnis der Grundlinie lässt sich ein beobachteter Wert nicht dem Fall mit oder ohne U zuordnen (die Verteilungen überlappen, Experiment 1). | Wie falsch darf das Diagramm sein? |
 | **Ein verborgener Confounder, lineare Regression** | Mehrere Confounder, nichtlineare Wirkungen und andere Schätzer (Instrument, Frontdoor, doppelt robust) sind nicht gebaut. | nicht gebaut |
 | **Der Benchmark ist plausibel** | „U so stark wie Z“ ist eine Annahme über etwas Unbeobachtetes; die Daten prüfen sie nicht. | nicht gebaut |
 | **Die negative Kontrolle teilt die Ursache** | Teilt sie U kaum, schweigt sie; wirkt der Faktor selbst auf sie, schlägt sie ohne Confounder an (Experiment 3). | nicht gebaut |
