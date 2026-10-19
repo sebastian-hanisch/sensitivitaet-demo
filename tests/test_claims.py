@@ -66,6 +66,12 @@ def test_experiment_4_benchmark(bench):
 
 
 def test_the_text_numbers_of_the_app_follow_the_findings(identity, evalue_res, falsify, bench):
-    assert "4e-13 bzw. 1e-15" in ev.verdict_identity(identity)[1] and "0,248" in ev.verdict_identity(identity)[1] and "0,178" in ev.verdict_identity(identity)[1] and "In 191 Läufen" in ev.verdict_identity(identity)[1]
+    text = ev.verdict_identity(identity)[1]
+    # dev_bias, dev_se und dev_rv sind Rundungsrauschen (dev_se ein Vielfaches von 2,2e-16): welche Ziffer herauskommt, hängt von der Hardware ab
+    # (FMA). Derselbe Commit war beim Push grün und im Canary rot ("1e-15" gegen "2e-15"). Befund ist die Größenordnung; der Text muss die
+    # gemessenen Werte nennen, aber nicht bestimmte Ziffern des Rauschens.
+    assert identity["dev_bias"] < 1e-11 and identity["dev_se"] < 1e-13 and identity["dev_rv"] < 1e-11
+    assert f"{identity['dev_bias']:.0e} bzw. {identity['dev_se']:.0e}" in text and f"{identity['dev_rv']:.0e}" in text
+    assert "0,248" in text and "0,178" in text and "In 191 Läufen" in text
     assert "E-Wert 2,37" in ev.verdict_evalue(evalue_res)[1] and "5 %, bei 0,5 in 52 % und bei 1,5 in 98 %" in ev.verdict_falsify(falsify)[1] and "in 45 % an" in ev.verdict_falsify(falsify)[1]
     assert "26,7 % von x und 27,8 % von y" in ev.verdict_benchmark(bench)[1] and "−1,10 und 6,29" in ev.verdict_benchmark(bench)[1] and "−18,76 und 23,95" in ev.verdict_benchmark(bench)[1]
