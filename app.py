@@ -89,6 +89,17 @@ Weiter unten: vier Experimente (**🔬**), **🚧 Wo die Annahmen enden** und de
 """
 )
 
+# erklaerseite:einfach:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/sensitivitaet-verborgene-ursache-erklaert.json, nicht von Hand ändern)
+with st.expander("💬 In einfachen Worten"):
+    st.markdown(
+        """
+Wer aus Beobachtungsdaten auf eine Wirkung schließt, übersieht vielleicht eine Ursache, die niemand gemessen hat. Ob es sie gibt, lässt sich aus den Daten nicht klären. Die Demo fragt deshalb anders: Wie stark müsste so eine verborgene Ursache sein, damit die Schlussfolgerung kippt? Der **Robustheitswert** und der **E-Wert** antworten darauf mit einer Zahl. Die **negative Kontrolle** prüft zusätzlich die Annahme, dass nichts Verborgenes mitspielt, die üblichen Widerlegungstests prüfen dagegen nur die Technik. Alles ist simuliert, deshalb kennt die Demo die Wahrheit und kann zeigen, was davon den verborgenen Einfluss wirklich sieht und was nur beruhigt.
+
+[Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/sensitivitaet-verborgene-ursache-erklaert.html)
+        """
+    )
+# erklaerseite:einfach:end
+
 with st.expander("So liest man die Konturkarte", expanded=True):
     st.markdown(
         """
@@ -216,6 +227,28 @@ st.markdown(
 st.markdown("---")
 
 with st.expander("📐 Mathematische Formulierung"):
+    # erklaerseite:lesehilfe:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/sensitivitaet-verborgene-ursache-erklaert.json, nicht von Hand ändern)
+    st.markdown(
+        r"""
+**Lesehilfe.** Gegeben sind eine Schätzung der Wirkung aus Beobachtungsdaten und die Annahme, dass eine Ursache fehlt. Gesucht ist, wie stark diese Ursache auf Faktor und Ergebnis wirken müsste, damit die Schätzung um einen Anteil $q$ fällt.
+
+| Symbol | Bedeutung |
+|---|---|
+| $D$, $Y$, $X$ | Behandlung (der hohe Faktor), Ergebnis (Servicegrad), Kontrollvariablen (in der Welt der Demo die beobachtete Schwankung) |
+| $Z$ | in den Formeln der weggelassene Confounder (in der Welt der Demo die verborgene Standortqualität $U$) |
+| $\hat\tau_{\mathrm{res}}$, $\hat\tau_{\mathrm{voll}}$ | Schätzung ohne und mit dem Confounder |
+| $R^2$ | partielles Bestimmtheitsmaß: Anteil der Reststreuung, den eine Variable erklärt |
+| $t$, $\mathrm{df}$, $\mathrm{se}$ | $t$-Wert, Freiheitsgrade und Standardfehler der Schätzung |
+| $f$, $f_q$ | Cohens $f = |t|/\sqrt{\mathrm{df}}$ und $f_q = q\,f$ |
+| $q$ | Anteil, um den die Schätzung fallen soll |
+| $\mathrm{RV}_q$ | Robustheitswert: nötige Stärke des Confounders auf beiden Wegen |
+| $\mathrm{RR}$, $E$ | Risikoverhältnis und E-Wert |
+| $\mathrm{RR}_{UD}$, $\mathrm{RR}_{UY}$, $B$ | Risikoverhältnisse des Confounders zum Faktor und zum Ergebnis, Schranke für den Verzerrungsfaktor |
+
+[Schritt für Schritt erklärt, mit Herleitung und Literatur](https://sebastianhanisch.net/sensitivitaet-verborgene-ursache-erklaert.html#fachleute)
+        """
+    )
+    # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
 **Partielles R².** Für die Behandlung $D$ in der Regression von $Y$ auf $D$ und Kontrollen mit $t$-Wert $t$ und $\mathrm{df}$ Freiheitsgraden: $R^2_{Y\sim D\mid X} = t^2/(t^2+\mathrm{df})$; Cohens $f = |t|/\sqrt{\mathrm{df}}$.
